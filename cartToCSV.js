@@ -9,7 +9,16 @@ rows.push(head);
 for (let i = 0; i < document.getElementsByClassName('hd-trolleyMenuItem').length; i++) {
 let quantity = document.getElementsByClassName('hd-trolleyMenuItem')[i].children[1].children[1].children[0].children[0].children[1].value;
 let url = document.getElementsByClassName('hd-trolleyMenuItem')[i].children[0].href;
-let price = document.getElementsByClassName('hd-trolleyMenuItem')[i].children[1].children[0].innerText.substring(1);
+let priceText = document.getElementsByClassName('hd-trolleyMenuItem')[i].children[1].children[0].innerText;
+
+let price = '';
+
+if (priceText.startsWith('£')) {
+    price = priceText.substring(1);
+} else {
+    price = '0.' + priceText.slice(0, -1);
+}
+
 let row = [quantity, url, price];
 rows.push(row);
 }

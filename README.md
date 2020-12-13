@@ -8,6 +8,7 @@ To use it:
 1. Make sure the windows width is smaller than 1024px. 
 2. Load the script via any Chrome Javascript Injector, such as https://chrome.google.com/webstore/detail/scripty-javascript-inject/milkbiaeapddfnpenedfgbfdacpbcbam.
 3. Run the script when you have some items in your cart.
+4. For Morrisons, run the script on https://groceries.morrisons.com/products/
 
 index.html is a web form where you can upload the csv of shopping item and convert it into a html table. It works with addToCart.js to add items to your shopping cart. 
 
