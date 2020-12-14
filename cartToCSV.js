@@ -52,8 +52,6 @@ function cartToCSVMorrisons () {
 
 function cartToCSVSainsburys () {
     let itemRows = [];
-
-    document.getElementsByTagName('tbody')[1]
     
     for (let i = 0; i < document.getElementsByTagName('tbody')[1].children.length; i++) {
         let quantity =  document.getElementsByTagName('tbody')[1].children[i].children[0].children[0].children[0].innerText;
