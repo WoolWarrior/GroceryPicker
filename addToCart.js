@@ -20,10 +20,20 @@ if (host === "groceries.morrisons.com") {
 } 
 
 if (host === "www.sainsburys.co.uk") {
-  setTimeout(() => {
-    addToCartSainsburys(); 
-    alert(altertText);
-  }, 5000);
+  addToCartSainsburys(); 
+  
+  // setTimeout(() => {
+  //   addToCartSainsburys(); 
+  //   alert(altertText);
+  // }, 5000);
+}
+
+function afterAFewSeconds(seconds) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(seconds);
+    }, seconds * 1000);
+  });
 }
 
 function addToCartMorrisons() {
@@ -52,15 +62,28 @@ function addToCartMorrisons() {
   }
 }
 
-function addToCartSainsburys() {
+async function addToCartSainsburys() {
 
   // if the item is OOS, isOutOfStock is 1.
   let isOutOfStock = document.getElementsByClassName('pd__message').length;
+  // if the item is in cart already, hasInCart is 1
+  let hasInCart = document.getElementsByClassName('ln-c-button ln-c-button--outlined pt-button__quantity').length;
+  let timeCount = 0;
 
-  if (isOutOfStock !== 1) {
+  while(isOutOfStock === 0 && hasInCart === 0) {
+    timeCount += await afterAFewSeconds(0.1);
+    isOutOfStock = document.getElementsByClassName('pd__message').length;
+    hasInCart = document.getElementsByClassName('ln-c-button ln-c-button--outlined pt-button__quantity').length;
+    console.log({isOutOfStock});
+    console.log({hasInCart});
+    console.log(timeCount);
+    if (timeCount === 10 ){
+      break;
+    }
+  }
   
-    // if the item is in cart already, hasInCart is 1
-    let hasInCart = document.getElementsByClassName('ln-c-button ln-c-button--outlined pt-button__quantity').length;
+  if (isOutOfStock !== 1) { 
+    // let hasInCart = document.getElementsByClassName('ln-c-button ln-c-button--outlined pt-button__quantity').length;
     if (hasInCart !== 1){
       // The item is not in the cart yet.
       document.getElementsByClassName('ln-c-button ln-c-button--filled pt__add-button')[0].click();
@@ -77,6 +100,5 @@ function addToCartSainsburys() {
     itemName += ' ' + url;
     downloadToFile(itemName, 'Out-of-stock-item.txt', 'text/plain');
   }
+  alert(altertText);
 }
-
-
