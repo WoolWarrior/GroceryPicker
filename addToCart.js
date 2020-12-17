@@ -21,11 +21,6 @@ if (host === "groceries.morrisons.com") {
 
 if (host === "www.sainsburys.co.uk") {
   addToCartSainsburys(); 
-  
-  // setTimeout(() => {
-  //   addToCartSainsburys(); 
-  //   alert(altertText);
-  // }, 5000);
 }
 
 function afterAFewSeconds(seconds) {
