@@ -63,37 +63,51 @@ async function addToCartSainsburys() {
   let isOutOfStock = document.getElementsByClassName('pd__message').length;
   // if the item is in cart already, hasInCart is 1
   let hasInCart = document.getElementsByClassName('ln-c-button ln-c-button--outlined pt-button__quantity').length;
+  // if the item is not in cart and is in stock
+  let hasAddButton = document.getElementsByClassName('ln-c-button ln-c-button--filled pt__add-button').length;
   let timeCount = 0;
+  let timeOut;
 
-  while(isOutOfStock === 0 && hasInCart === 0) {
-    timeCount += await afterAFewSeconds(0.1);
+  while(isOutOfStock === 0 && hasInCart === 0 && hasAddButton === 0) {
+    await afterAFewSeconds(0.5);
+    timeCount++;
     isOutOfStock = document.getElementsByClassName('pd__message').length;
     hasInCart = document.getElementsByClassName('ln-c-button ln-c-button--outlined pt-button__quantity').length;
+    hasAddButton = document.getElementsByClassName('ln-c-button ln-c-button--filled pt__add-button').length;
+    
     console.log({isOutOfStock});
     console.log({hasInCart});
+    console.log({hasInCart});
     console.log(timeCount);
-    if (timeCount === 10 ){
+    if (timeCount === 600 ){
+      timeOut = true;
+      //break after 10 seconds
       break;
     }
   }
   
-  if (isOutOfStock !== 1) { 
-    // let hasInCart = document.getElementsByClassName('ln-c-button ln-c-button--outlined pt-button__quantity').length;
-    if (hasInCart !== 1){
-      // The item is not in the cart yet.
-      document.getElementsByClassName('ln-c-button ln-c-button--filled pt__add-button')[0].click();
-      altertText = "1 This item is added to your cart!";
+  if (!timeOut) {
+    if (isOutOfStock !== 1) { 
+      // let hasInCart = document.getElementsByClassName('ln-c-button ln-c-button--outlined pt-button__quantity').length;
+      if (hasInCart !== 1){
+        // The item is not in the cart yet.
+        document.getElementsByClassName('ln-c-button ln-c-button--filled pt__add-button')[0].click();
+        altertText = "1 This item is added to your cart!";
+      } else {
+        // The item is in the cart. 
+        let numberInCart = parseInt(document.getElementsByClassName('ln-c-button ln-c-button--outlined pt-button__quantity')[0].innerText);
+        document.getElementsByClassName('ln-c-button ln-c-button--filled pt-button__inc')[0].click();
+        altertText = "2 This item is added to your cart! You have " + (++numberInCart) + " in your cart.";
+      }
     } else {
-      // The item is in the cart. 
-      let numberInCart = parseInt(document.getElementsByClassName('ln-c-button ln-c-button--outlined pt-button__quantity')[0].innerText);
-      document.getElementsByClassName('ln-c-button ln-c-button--filled pt-button__inc')[0].click();
-      altertText = "2 This item is added to your cart! You have " + (++numberInCart) + " in your cart.";
+      altertText = "3 This item is out of stock.";
+      let itemName = document.getElementsByClassName('pd__header')[0].innerText;
+      itemName += ' ' + url;
+      downloadToFile(itemName, 'Out-of-stock-item.txt', 'text/plain');
     }
   } else {
-    altertText = "3 This item is out of stock.";
-    let itemName = document.getElementsByClassName('pd__header')[0].innerText;
-    itemName += ' ' + url;
-    downloadToFile(itemName, 'Out-of-stock-item.txt', 'text/plain');
+    altertText = 'Timeout no action taken - Please check the item manually'
   }
+
   alert(altertText);
 }
