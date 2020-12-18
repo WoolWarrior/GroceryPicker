@@ -17,6 +17,7 @@ To use it:
 3. Open index.html and upload the csv file in the sample format.
 
 To do:
+* Use jQuery in addToCart.js
 * Add support for ASDA
 * Build a Chrome extension
 * Add support for Tesco
