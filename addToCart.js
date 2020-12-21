@@ -81,7 +81,7 @@ async function addToCartSainsburys() {
     console.log(timeCount);
     if (timeCount === 600 ){
       timeOut = true;
-      //break after 10 seconds
+      //break after 30 seconds
       break;
     }
   }

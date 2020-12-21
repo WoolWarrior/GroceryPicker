@@ -1,5 +1,5 @@
 let rows = [];
-let head = ['Quantity','Product url','Price']
+let head = ['Quantity','Product url','Price','Product','Promotion']
 rows.push(head);
 
 let host = window.location.host; 
@@ -11,6 +11,10 @@ if (host === "groceries.morrisons.com") {
 
 if (host === "www.sainsburys.co.uk") {
     rows = rows.concat(cartToCSVSainsburys());
+}
+
+if (host === "groceries.asda.com") {
+    rows = rows.concat(cartToCSVASDA());
 }
 
 function cartToCSVMorrisons () {
@@ -54,9 +58,19 @@ function cartToCSVSainsburys () {
     let itemRows = [];
     
     for (let i = 0; i < document.getElementsByTagName('tbody')[1].children.length; i++) {
-        let quantity =  document.getElementsByTagName('tbody')[1].children[i].children[0].children[0].children[0].innerText;
-        let url =       document.getElementsByTagName('tbody')[1].children[i].children[1].children[0].children[0].href;
-        let priceText = document.getElementsByTagName('tbody')[1].children[i].children[3].innerText;
+        let quantity = 0;
+        let url = '';
+        let priceText = '0';
+
+        if (document.getElementsByTagName('tbody')[1].children[i].children[0].children[0].children[0].innerText){
+            quantity = document.getElementsByTagName('tbody')[1].children[i].children[0].children[0].children[0].innerText;
+        }
+        if (document.getElementsByTagName('tbody')[1].children[i].children[1].children[0].children[0].href) {
+            url = document.getElementsByTagName('tbody')[1].children[i].children[1].children[0].children[0].href;
+        } 
+        if (document.getElementsByTagName('tbody')[1].children[i].children[3].innerText) {
+            priceText = document.getElementsByTagName('tbody')[1].children[i].children[3].innerText;
+        }
     
         let price = '';
     
@@ -66,6 +80,46 @@ function cartToCSVSainsburys () {
             price = '0.' + priceText.slice(0, -1);
         }
         let row = [quantity, url, price];
+        itemRows.push(row);
+    }
+
+    return itemRows;
+}
+
+function cartToCSVASDA() {
+    let itemRows = [];
+    
+    for (let i = 0; i < document.getElementsByClassName('department-item__title-price-banner').length; i++) {
+        let quantity = 0;
+        let url = '';
+        let priceText = '0';
+        let productText = '';
+        let promoText = '';
+
+        if (document.getElementsByClassName('department-item')[i].children[1].children[2].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[1].children[0].value){
+            quantity = document.getElementsByClassName('department-item')[i].children[1].children[2].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[1].children[0].value
+        }
+        if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].children[0].children[0].href) {
+            url = document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].children[0].children[0].href;
+        } 
+        if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[1].children[0].children[0].innerText) {
+            priceText = document.getElementsByClassName('department-item')[i].children[1].children[0].children[1].children[0].children[0].innerText;
+        }
+        if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].innerText) {
+            productText = document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].innerText;
+        }
+        if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[1]) {
+            promoText = document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[1].innerText;
+        }
+    
+        let price = '';
+    
+        if (priceText.startsWith('£')) {
+            price = priceText.substring(1);
+        } else {
+            price = priceText;
+        }
+        let row = [quantity, url, price, productText, promoText];
         itemRows.push(row);
     }
 
