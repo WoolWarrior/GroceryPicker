@@ -1,5 +1,5 @@
-let host = window.location.host; 
-let url = window.location.href;
+const host = window.location.host; 
+const url = window.location.href;
 console.log({url});
 let altertText = "Nothing happen!";
 
@@ -21,6 +21,10 @@ if (host === "groceries.morrisons.com") {
 
 if (host === "www.sainsburys.co.uk") {
   addToCartSainsburys(); 
+}
+
+if (host === "groceries.asda.com") {
+  addToCartASDA();
 }
 
 function afterAFewSeconds(seconds) {
@@ -109,5 +113,69 @@ async function addToCartSainsburys() {
     altertText = 'Timeout no action taken - Please check the item manually'
   }
 
+  alert(altertText);
+}
+
+async function addToCartASDA() {
+
+  // if the item is OOS, isOutOfStock is 1.
+  let isOutOfStock = document.getElementsByClassName('unavailable-banner pdp-unavail-banner').length;
+  // if the item is in cart already, hasInCart is 1
+  let hasInCart = document.getElementsByClassName('asda-button asda-button--category-primary asda-button--color-green asda-button--size-regular co-product-quantity__button co-product-quantity__button--increment').length;
+  // if the item is not in cart and is in stock
+  let hasAddButton = document.getElementsByClassName('asda-btn asda-btn--primary co-quantity__add-btn pdp-main-details__quantity').length;
+  let timeCount = 0;
+  let timeOut;
+
+  while(isOutOfStock === 0 && hasInCart === 0 && hasAddButton === 0) {
+    await afterAFewSeconds(0.5);
+    timeCount++;
+    isOutOfStock = document.getElementsByClassName('unavailable-banner pdp-unavail-banner').length;
+    hasInCart = document.getElementsByClassName('asda-button asda-button--category-primary asda-button--color-green asda-button--size-regular co-product-quantity__button co-product-quantity__button--increment').length;
+    hasAddButton = document.getElementsByClassName('asda-btn asda-btn--primary co-quantity__add-btn pdp-main-details__quantity').length;
+    
+    console.log({isOutOfStock});
+    console.log({hasInCart});
+    console.log({hasInCart});
+    console.log(timeCount);
+    if (timeCount === 600 ){
+      timeOut = true;
+      //break after 30 seconds
+      break;
+    }
+  }
+
+  if (!timeOut) {
+    if (isOutOfStock !== 1) {
+    
+      // if the item is in cart already, hasInCart is 1
+      if (hasInCart !== 1){
+        // The item is not in the cart yet.
+        document.getElementsByClassName('asda-btn asda-btn--primary co-quantity__add-btn pdp-main-details__quantity')[0].click();
+        altertText = "1 This item is added to your cart!";
+      } else {
+        // The item is in the cart. 
+        let isLimited = document.getElementsByClassName('asda-button asda-button--category-primary asda-button--color-green asda-button--size-regular asda-button--disabled co-product-quantity__button co-product-quantity__button--increment')[0].disabled;
+        let numberInCart = document.getElementsByClassName('co-product-quantity__quantity-field co-quantity__quantity-field')[0].value;
+        if (isLimited) {
+          altertText = "2.1 This item is limited per order! You have " + (numberInCart) + " in your cart.";
+          let itemName = document.getElementsByClassName('pdp-main-details__title')[0].innerText;
+          itemName += ' ' + url;
+          downloadToFile(itemName, 'Limited-item.txt', 'text/plain');
+        } else {
+          document.getElementsByClassName('asda-button asda-button--category-primary asda-button--color-green asda-button--size-regular co-product-quantity__button co-product-quantity__button--increment')[0].click();
+          altertText = "2.2 This item is added to your cart! You have " + (++numberInCart) + " in your cart.";
+        }
+        
+      }
+    } else {
+      altertText = "3 This item is out of stock.";
+      let itemName = document.getElementsByClassName('pdp-main-details__title')[0].innerText;
+      itemName += ' ' + url;
+      downloadToFile(itemName, 'Out-of-stock-item.txt', 'text/plain');
+    }
+  } else {
+    altertText = 'Timeout no action taken - Please check the item manually'
+  }
   alert(altertText);
 }

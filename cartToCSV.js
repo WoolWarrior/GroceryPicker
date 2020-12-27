@@ -1,9 +1,9 @@
 let rows = [];
-let head = ['Quantity','Product url','Price','Product','Promotion']
+const head = ['Quantity','Product url','Price','Product','Promotion']
 rows.push(head);
 
-let host = window.location.host; 
-let url = window.location.href;
+const host = window.location.host; 
+const url = window.location.href;
 
 if (host === "groceries.morrisons.com") {
     rows = rows.concat(cartToCSVMorrisons());
@@ -18,11 +18,11 @@ if (host === "groceries.asda.com") {
 }
 
 function cartToCSVMorrisons () {
-    let pathname = window.location.pathname;
+    const pathname = window.location.pathname;
     if (pathname.substring(0,10) !== "/products/") {
         alert('Please go to https://groceries.morrisons.com/products/');
     } else {
-        let screenWidth = window.screen.width;
+        const screenWidth = window.screen.width;
         if (screenWidth > 1023) {
             alert('Please make the window width smaller than 1024px');
         } else {
@@ -134,6 +134,5 @@ rows.forEach(function(rowArray) {
     csvContent += row + "\r\n";
 });
 
-var encodedUri = encodeURI(csvContent);
+const encodedUri = encodeURI(csvContent);
 window.open(encodedUri);
-  
