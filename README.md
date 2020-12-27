@@ -1,7 +1,7 @@
 # GroceryPicker
 This repository is for grocery shopping automation - create csv file from a cart, import csv file to fill cart
 
-It currently only works on Morrisons and Sainsburys website. 
+It currently only works on Morrisons, ASDA and Sainsburys website. 
 
 cartToCSV.js is a script to create a csv file from the cart. 
 To use it: 
@@ -17,8 +17,7 @@ To use it:
 3. Open index.html and upload the csv file in the sample format.
 
 To do:
-* Use jQuery in addToCart.js
-* Add support for ASDA
-* Build a Chrome extension
 * Add support for Tesco
 * Add support for Other supermarket
+* Build a Chrome extension
+* Use jQuery in addToCart.js
