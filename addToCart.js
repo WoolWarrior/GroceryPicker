@@ -131,7 +131,7 @@ async function addToCartASDA() {
     await afterAFewSeconds(0.5);
     timeCount++;
     isOutOfStock = document.getElementsByClassName('unavailable-banner pdp-unavail-banner').length;
-    hasInCart = document.getElementsByClassName('asda-button asda-button--category-primary asda-button--color-green asda-button--size-regular co-product-quantity__button co-product-quantity__button--increment').length;
+    hasInCart = document.getElementsByClassName('co-product-quantity__button--increment').length;
     hasAddButton = document.getElementsByClassName('asda-btn asda-btn--primary co-quantity__add-btn pdp-main-details__quantity').length;
     
     console.log({isOutOfStock});
@@ -155,7 +155,7 @@ async function addToCartASDA() {
         altertText = "1 This item is added to your cart!";
       } else {
         // The item is in the cart. 
-        let isLimited = document.getElementsByClassName('asda-button asda-button--category-primary asda-button--color-green asda-button--size-regular asda-button--disabled co-product-quantity__button co-product-quantity__button--increment')[0].disabled;
+        let isLimited = document.getElementsByClassName('co-product-quantity__button--increment')[0].disabled;
         let numberInCart = document.getElementsByClassName('co-product-quantity__quantity-field co-quantity__quantity-field')[0].value;
         if (isLimited) {
           altertText = "2.1 This item is limited per order! You have " + (numberInCart) + " in your cart.";
@@ -163,7 +163,7 @@ async function addToCartASDA() {
           itemName += ' ' + url;
           downloadToFile(itemName, 'Limited-item.txt', 'text/plain');
         } else {
-          document.getElementsByClassName('asda-button asda-button--category-primary asda-button--color-green asda-button--size-regular co-product-quantity__button co-product-quantity__button--increment')[0].click();
+          document.getElementsByClassName('co-product-quantity__button--increment')[0].click();
           altertText = "2.2 This item is added to your cart! You have " + (++numberInCart) + " in your cart.";
         }
         
