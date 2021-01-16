@@ -1,30 +1,48 @@
-const host = window.location.host; 
-const url = window.location.href;
-console.log({url});
-let altertText = "Nothing happen!";
-
-// function to download a text file
-const downloadToFile = (content, filename, contentType) => {
-  const a = document.createElement('a');
-  const file = new Blob([content], {type: contentType});
-  
-  a.href= URL.createObjectURL(file);
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(a.href);
-};
-
-if (host === "groceries.morrisons.com") {
-  addToCartMorrisons();
-  alert(altertText);
-} 
-
-if (host === "www.sainsburys.co.uk") {
-  addToCartSainsburys(); 
+window.onload=function(){  
+  chrome.storage.sync.get('AddToCartEnabled', function(data) {
+      if(data.AddToCartEnabled){
+        RunAddToCart();
+      }
+  });
 }
 
-if (host === "groceries.asda.com") {
-  addToCartASDA();
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)    {
+  if(request.command === 'initAddToCart'){
+    RunAddToCart();
+  }
+  sendResponse({result: "success"});
+});
+
+function RunAddToCart () {
+
+  const host = window.location.host; 
+  const url = window.location.href;
+  console.log({url});
+  let altertText = "Nothing happen!";
+
+  // function to download a text file
+  const downloadToFile = (content, filename, contentType) => {
+    const a = document.createElement('a');
+    const file = new Blob([content], {type: contentType});
+    
+    a.href= URL.createObjectURL(file);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  if (host === "groceries.morrisons.com") {
+    addToCartMorrisons();
+    alert(altertText);
+  } 
+
+  if (host === "www.sainsburys.co.uk") {
+    addToCartSainsburys(); 
+  }
+
+  if (host === "groceries.asda.com") {
+    addToCartASDA();
+  }
 }
 
 function afterAFewSeconds(seconds) {
