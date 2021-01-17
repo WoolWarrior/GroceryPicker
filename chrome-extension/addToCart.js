@@ -1,8 +1,8 @@
-window.onload=function(){  
+window.onload = function(){  
   chrome.storage.sync.get('AddToCartEnabled', function(data) {
-      if(data.AddToCartEnabled){
-        RunAddToCart();
-      }
+    if(data.AddToCartEnabled){
+      RunAddToCart();
+    }
   });
 }
 
@@ -14,34 +14,24 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)    
 });
 
 function RunAddToCart () {
-
   const host = window.location.host; 
   const url = window.location.href;
-  console.log({url});
   let altertText = "Nothing happen!";
 
+  console.log({url});
+
   // function to download a text file
-  const downloadToFile = (content, filename, contentType) => {
-    const a = document.createElement('a');
-    const file = new Blob([content], {type: contentType});
-    
-    a.href= URL.createObjectURL(file);
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(a.href);
-  };
 
   if (host === "groceries.morrisons.com") {
-    addToCartMorrisons();
-    alert(altertText);
+    addToCartMorrisons(url, altertText);
   } 
 
   if (host === "www.sainsburys.co.uk") {
-    addToCartSainsburys(); 
+    addToCartSainsburys(url, altertText); 
   }
 
   if (host === "groceries.asda.com") {
-    addToCartASDA();
+    addToCartASDA(url, altertText);
   }
 }
 
@@ -53,10 +43,21 @@ function afterAFewSeconds(seconds) {
   });
 }
 
-function addToCartMorrisons() {
+const downloadToFile = (content, filename, contentType) => {
+  const a = document.createElement('a');
+  const file = new Blob([content], {type: contentType});
+  
+  a.href= URL.createObjectURL(file);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+
+function addToCartMorrisons(url, altertText) {
+
   // if the item is OOS, isOutOfStock is 1.
   let isOutOfStock = document.getElementsByClassName('bop-outOfStock__text').length;
-
+  
   if (isOutOfStock !== 1) {
     
     // if the item is in cart already, hasInCart is 2
@@ -77,10 +78,11 @@ function addToCartMorrisons() {
     itemName += ' ' + url;
     downloadToFile(itemName, 'Out-of-stock-item.txt', 'text/plain');
   }
+
+  alert(altertText);
 }
 
-async function addToCartSainsburys() {
-
+async function addToCartSainsburys(url, altertText) {
   // if the item is OOS, isOutOfStock is 1.
   let isOutOfStock = document.getElementsByClassName('pd__message').length;
   // if the item is in cart already, hasInCart is 1
@@ -134,8 +136,7 @@ async function addToCartSainsburys() {
   alert(altertText);
 }
 
-async function addToCartASDA() {
-
+async function addToCartASDA(url, altertText) {
   // if the item is OOS, isOutOfStock is 1.
   let isOutOfStock = document.getElementsByClassName('unavailable-banner pdp-unavail-banner').length;
   // if the item is in cart already, hasInCart is 1
