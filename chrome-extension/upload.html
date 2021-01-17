@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="thirdParty/jquery.min.js"></script>
+	<script src="thirdParty/papaparse.min.js"></script>
+	<title>Read CSV to open item url </title>
+	<style>
+		.pdfobject-container { height: 500px;}
+		.pdfobject { border: 1px solid #666; }
+	</style>
+</head>
+<body>
+  <div class="container" style="padding:10px 10px;">
+    <h1>Read CSV to open item url </h1>
+	<div class="well">
+		<div class="row">
+		<form class="form-inline">
+			<div class="form-group">
+			  <label for="files">Upload a CSV formatted file:</label>
+			  <input type="file" id="files"  class="form-control" accept=".csv" required />
+			</div>
+			<div class="form-group">
+			 <button type="submit" id="submit-file" class="btn btn-primary">Upload File</button>
+			 </div>
+		</form>
+        </div>		
+        <div class="row" id="parsed_csv_list">
+        </div>
+	</div>
+  </div>
+  <script src="upload.js"></script>
+</body>
+</html>

@@ -17,6 +17,9 @@ chrome.runtime.onInstalled.addListener(function() {
         new chrome.declarativeContent.PageStateMatcher({
           pageUrl: {hostEquals: 'groceries.asda.com'},
         }),
+        new chrome.declarativeContent.PageStateMatcher({
+          pageUrl: {hostEquals: 'www.google.com'},
+        }),
       ],
       actions: [new chrome.declarativeContent.ShowPageAction()]
     }]);

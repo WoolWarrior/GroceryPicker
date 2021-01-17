@@ -17,7 +17,7 @@ To create a csv file from the cart:
 To add items from a csv file:
 1. Click the extension
 2. Check the box 'Enable adding to cart'
-3. Open index.html. It is a web form where you can upload the csv of shopping item and convert it into a html table. 
+3. Click 'Upload csv' butoon. It is a web form where you can upload the csv of shopping item and convert it into a html table. 
 4. Upload the csv file. The csv file should be in the same format as the sample file.
 5. Make sure uncheck the box 'Enable adding to cart' after you finish the work
 
