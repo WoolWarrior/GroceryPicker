@@ -1,12 +1,12 @@
-function cartToCSVMorrisons () {
-    const pathname = window.location.pathname;
+function cartToCSVMorrisons (pathname) {
     if (pathname.substring(0,9) !== "/products") {
         alert('Please go to https://groceries.morrisons.com/products');
+        window.open('https://groceries.morrisons.com/products');
         return [];
     } else {
-        const screenWidth = window.screen.width;
+        let screenWidth = window.innerWidth;
         if (screenWidth > 1023) {
-            alert('Please make the window width smaller than 1024px');
+            alert('Please make the window width smaller than 1024px. Current width: ' + screenWidth + 'px.');
             return [];
         } else {
             if (document.getElementsByClassName('hd-trolleyMenuItem').length === 0) {
@@ -37,10 +37,10 @@ function cartToCSVMorrisons () {
     
 }
 
-function cartToCSVSainsburys () {
-    const pathname = window.location.pathname;
+function cartToCSVSainsburys (pathname) {
     if (pathname !== "/shop/AjaxOrderItemDisplayView") {
         alert('Please go to My trolley page');
+        window.open('/shop/AjaxOrderItemDisplayView')
         return [];
     } else {
         let itemRows = [];
@@ -75,10 +75,10 @@ function cartToCSVSainsburys () {
     }
 }
 
-function cartToCSVASDA() {
-    const pathname = window.location.pathname;
+function cartToCSVASDA(pathname) {
     if (pathname !== "/trolley") {
         alert('Please go to My trolley page - https://groceries.asda.com/trolley');
+        window.open('https://groceries.asda.com/trolley');
         return [];
     } else {
         let itemRows = [];
@@ -122,7 +122,7 @@ function cartToCSVASDA() {
 }
 
 function runCartToCSV() {
-
+    const pathname = window.location.pathname;
     let rows = [];
     const head = ['Quantity','Product url','Price','Product','Promotion']
     rows.push(head);
@@ -131,15 +131,15 @@ function runCartToCSV() {
     // const url = window.location.href;
 
     if (host === "groceries.morrisons.com") {
-        rows = rows.concat(cartToCSVMorrisons());
+        rows = rows.concat(cartToCSVMorrisons(pathname));
     } 
 
     if (host === "www.sainsburys.co.uk") {
-        rows = rows.concat(cartToCSVSainsburys());
+        rows = rows.concat(cartToCSVSainsburys(pathname));
     }
 
     if (host === "groceries.asda.com") {
-        rows = rows.concat(cartToCSVASDA());
+        rows = rows.concat(cartToCSVASDA(pathname));
     }
 
     console.log({rows});
@@ -154,8 +154,6 @@ function runCartToCSV() {
         const encodedUri = encodeURI(csvContent);
         window.open(encodedUri);
     }
-    
-
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)    {
