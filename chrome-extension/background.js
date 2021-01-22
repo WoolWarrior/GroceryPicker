@@ -9,6 +9,9 @@ chrome.runtime.onInstalled.addListener(function() {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [
         new chrome.declarativeContent.PageStateMatcher({
+          pageUrl: {hostEquals: 'www.google.com'},
+        }),
+        new chrome.declarativeContent.PageStateMatcher({
           pageUrl: {hostEquals: 'groceries.morrisons.com'},
         }),
         new chrome.declarativeContent.PageStateMatcher({
@@ -18,7 +21,7 @@ chrome.runtime.onInstalled.addListener(function() {
           pageUrl: {hostEquals: 'groceries.asda.com'},
         }),
         new chrome.declarativeContent.PageStateMatcher({
-          pageUrl: {hostEquals: 'www.google.com'},
+          pageUrl: {hostEquals: 'www.waitrose.com'},
         }),
       ],
       actions: [new chrome.declarativeContent.ShowPageAction()]

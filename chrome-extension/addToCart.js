@@ -33,6 +33,10 @@ function RunAddToCart () {
   if (host === "groceries.asda.com") {
     addToCartASDA(url, altertText);
   }
+
+  if (host === "www.waitrose.com") {
+    addToCartWaitrose(url, altertText);
+  }
 }
 
 function afterAFewSeconds(seconds) {
@@ -196,5 +200,38 @@ async function addToCartASDA(url, altertText) {
   } else {
     altertText = 'Timeout no action taken - Please check the item manually'
   }
+  alert(altertText);
+}
+
+async function addToCartWaitrose(url, altertText) {
+  let lastIndexOfSlash = window.location.pathname.lastIndexOf('/');
+  let itemID = window.location.pathname.substring(lastIndexOfSlash + 1);
+  let addButtonID = "tAbtn-" + itemID;
+  console.log(addButtonID);
+  console.log(document.getElementById(addButtonID))
+
+  let timeCount = 0;
+  let timeOut;
+  let addButton = document.getElementById(addButtonID);
+
+  while(addButton === null) {
+    await afterAFewSeconds(0.5);
+    timeCount++;
+    addButton = document.getElementById(addButtonID);
+
+    console.log({addButton});
+    console.log(timeCount);
+    if (timeCount === 600 ){
+      timeOut = true;
+      //break after 30 seconds
+      break;
+    }
+  }
+
+  if (!timeOut) {
+    document.getElementById(addButtonID).click();
+    altertText = "Item added";
+  }
+
   alert(altertText);
 }
