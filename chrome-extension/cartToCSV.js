@@ -121,6 +121,50 @@ function cartToCSVASDA(pathname) {
     }
 }
 
+function cartToCSVWaitrose(pathname) {
+    if (pathname !== "/ecom/shop/trolley") {
+        alert('Please go to https://www.waitrose.com/ecom/shop/trolley');
+        window.open('https://www.waitrose.com/ecom/shop/trolley');
+        return [];
+    } else {
+        let itemRows = [];
+        
+        for (let i = 0; i < document.getElementsByClassName('trolleyPod___3jKcQ').length; i++) {
+            let quantity = 0;
+            let url = '';
+            let priceText = '0';
+            let productText = '';
+            let promoText = '';
+
+            if (document.getElementsByClassName('quantity___2wfk7')[i].firstChild.textContent){
+                quantity = document.getElementsByClassName('quantity___2wfk7')[i].firstChild.textContent;
+            }
+            if (document.getElementsByClassName('productTitle___3NiuI')[i].href) {
+                url = document.getElementsByClassName('productTitle___3NiuI')[i].href;
+            } 
+            if (document.getElementsByClassName('price___2F5bt')[i].textContent) {
+                priceText = document.getElementsByClassName('price___2F5bt')[i].textContent;
+            }
+            if (document.getElementsByClassName('productTitle___3NiuI')[i].textContent) {
+                productText = document.getElementsByClassName('productTitle___3NiuI')[i].textContent;
+            }
+            
+        
+            let price = '';
+        
+            if (priceText.startsWith('£')) {
+                price = priceText.substring(1);
+            } else {
+                price = '0.' + priceText.slice(0, -1);
+            }
+            let row = [quantity, url, price, productText, promoText];
+            itemRows.push(row);
+        }
+
+        return itemRows;
+    }
+}
+
 function runCartToCSV() {
     const pathname = window.location.pathname;
     let rows = [];
@@ -128,7 +172,6 @@ function runCartToCSV() {
     rows.push(head);
 
     const host = window.location.host; 
-    // const url = window.location.href;
 
     if (host === "groceries.morrisons.com") {
         rows = rows.concat(cartToCSVMorrisons(pathname));
@@ -140,6 +183,10 @@ function runCartToCSV() {
 
     if (host === "groceries.asda.com") {
         rows = rows.concat(cartToCSVASDA(pathname));
+    }
+
+    if (host === "www.waitrose.com") {
+        rows = rows.concat(cartToCSVWaitrose(pathname));
     }
 
     console.log({rows});
