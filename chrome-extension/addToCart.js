@@ -204,9 +204,11 @@ async function addToCartASDA(url, altertText) {
 }
 
 async function addToCartWaitrose(url, altertText) {
+  let isOutOfStock = document.getElementsByClassName('message___3RyQU').length;
   let lastIndexOfSlash = window.location.pathname.lastIndexOf('/');
   let itemID = window.location.pathname.substring(lastIndexOfSlash + 1);
   let addButtonID = "tAbtn-" + itemID;
+
   console.log(addButtonID);
   console.log(document.getElementById(addButtonID))
 
@@ -214,11 +216,11 @@ async function addToCartWaitrose(url, altertText) {
   let timeOut;
   let addButton = document.getElementById(addButtonID);
 
-  while(addButton === null) {
+  while(isOutOfStock === 0 && addButton === null) {
     await afterAFewSeconds(0.5);
     timeCount++;
+    isOutOfStock = document.getElementsByClassName('message___3RyQU').length;
     addButton = document.getElementById(addButtonID);
-
     console.log({addButton});
     console.log(timeCount);
     if (timeCount === 600 ){
@@ -229,8 +231,16 @@ async function addToCartWaitrose(url, altertText) {
   }
 
   if (!timeOut) {
-    document.getElementById(addButtonID).click();
-    altertText = "Item added";
+    if (isOutOfStock !== 1) {
+      document.getElementById(addButtonID).click();
+      altertText = "Item added";
+    } else {
+      altertText = "3 This item is out of stock.";
+      let itemName = document.getElementById('productName').innerText;
+      itemName += ' ' + url;
+      downloadToFile(itemName, 'Out-of-stock-item.txt', 'text/plain');
+    }
+    
   }
 
   alert(altertText);
