@@ -16,10 +16,11 @@ function cartToCSVMorrisons (pathname) {
             let itemRows = [];
 
             for (let i = 0; i < document.getElementsByClassName('hd-trolleyMenuItem').length; i++) {
-                let quantity =  document.getElementsByClassName('hd-trolleyMenuItem')[i].children[1].children[1].children[0].children[0].children[1].value;
-                let url =       document.getElementsByClassName('hd-trolleyMenuItem')[i].children[0].href;
-                let priceText = document.getElementsByClassName('hd-trolleyMenuItem')[i].children[1].children[0].innerText;
-            
+                let quantity =  document.getElementsByClassName('quantityInput__input fop-in-trolley')[i].value;
+                let url =       document.getElementsByClassName('hd-trolleyMenuItem__link')[i].href;
+                let priceText = document.getElementsByClassName('fop-price')[i].innerText;
+                let productText = document.getElementsByClassName('hd-trolleyMenuItem__name')[i].textContent;
+                let promoText = '';
                 let price = '';
             
                 if (priceText.startsWith('£')) {
@@ -27,7 +28,7 @@ function cartToCSVMorrisons (pathname) {
                 } else {
                     price = '0.' + priceText.slice(0, -1);
                 }
-                let row = [quantity, url, price];
+                let row = [quantity, url, price, productText, promoText];
                 itemRows.push(row);
             }
 
@@ -50,14 +51,14 @@ function cartToCSVSainsburys (pathname) {
             let url = '';
             let priceText = '0';
     
-            if (document.getElementsByTagName('tbody')[1].children[i].children[0].children[0].children[0].innerText){
-                quantity = document.getElementsByTagName('tbody')[1].children[i].children[0].children[0].children[0].innerText;
+            if (document.getElementsByClassName('inTrolley')[i].innerText){
+                quantity = document.getElementsByClassName('inTrolley')[i].innerText;
             }
-            if (document.getElementsByTagName('tbody')[1].children[i].children[1].children[0].children[0].href) {
-                url = document.getElementsByTagName('tbody')[1].children[i].children[1].children[0].children[0].href;
+            if (document.getElementsByClassName('productContainer')[i].firstElementChild.href) {
+                url = document.getElementsByClassName('productContainer')[i].firstElementChild.href;
             } 
-            if (document.getElementsByTagName('tbody')[1].children[i].children[3].innerText) {
-                priceText = document.getElementsByTagName('tbody')[1].children[i].children[3].innerText;
+            if (document.getElementsByClassName('productPrice')[i].innerText) {
+                priceText = document.getElementsByClassName('productPrice')[i].innerText;
             }
         
             let price = '';
@@ -90,20 +91,20 @@ function cartToCSVASDA(pathname) {
             let productText = '';
             let promoText = '';
 
-            if (document.getElementsByClassName('department-item')[i].children[1].children[2].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[1].children[0].value){
-                quantity = document.getElementsByClassName('department-item')[i].children[1].children[2].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[1].children[0].value
+            if (document.getElementsByClassName('quantity-control__input')[i].value){
+                quantity = document.getElementsByClassName('quantity-control__input')[i].value;
             }
-            if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].children[0].children[0].href) {
-                url = document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].children[0].children[0].href;
+            if (document.getElementsByClassName('asda-link asda-link--secondary')[i].href) {
+                url = document.getElementsByClassName('asda-link asda-link--secondary')[i].href;
             } 
-            if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[1].children[0].children[0].innerText) {
-                priceText = document.getElementsByClassName('department-item')[i].children[1].children[0].children[1].children[0].children[0].innerText;
+            if (document.getElementsByClassName('ingredient__price')[i].innerText) {
+                priceText = document.getElementsByClassName('ingredient__price')[i].innerText;
             }
-            if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].innerText) {
-                productText = document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].innerText;
+            if (document.getElementsByClassName('asda-link asda-link--secondary')[i].innerText) {
+                productText = document.getElementsByClassName('asda-link asda-link--secondary')[i].innerText;
             }
-            if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[1]) {
-                promoText = document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[1].innerText;
+            if (document.getElementsByClassName('co-product__promo-text')[i].innerText) {
+                promoText = document.getElementsByClassName('co-product__promo-text')[i].innerText;
             }
         
             let price = '';
