@@ -97,16 +97,15 @@ function cartToCSVASDA(pathname) {
             if (document.getElementsByClassName('asda-link asda-link--secondary')[i].href) {
                 url = document.getElementsByClassName('asda-link asda-link--secondary')[i].href;
             } 
-            if (document.getElementsByClassName('ingredient__price')[i].innerText) {
+            if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[1].children[0].children[0].innerText){
                 priceText = document.getElementsByClassName('ingredient__price')[i].innerText;
             }
             if (document.getElementsByClassName('asda-link asda-link--secondary')[i].innerText) {
                 productText = document.getElementsByClassName('asda-link asda-link--secondary')[i].innerText;
             }
-            if (document.getElementsByClassName('co-product__promo-text')[i].innerText) {
-                promoText = document.getElementsByClassName('co-product__promo-text')[i].innerText;
+            if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[1]) {
+                promoText = document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[1].innerText;
             }
-        
             let price = '';
         
             if (priceText.startsWith('£')) {
