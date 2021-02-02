@@ -1,6 +1,6 @@
 {
   "name": "Download cart to CSV",
-  "version": "1.0",
+  "version": "0.9.0",
   "description": "Download your supermarket grocery cart to a CSV file",
   "permissions": ["activeTab", "declarativeContent", "storage"],
   "background": {
