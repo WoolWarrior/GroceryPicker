@@ -91,17 +91,17 @@ function cartToCSVASDA(pathname) {
             let productText = '';
             let promoText = '';
 
-            if (document.getElementsByClassName('quantity-control__input')[i].value){
-                quantity = document.getElementsByClassName('quantity-control__input')[i].value;
+            if (document.getElementsByClassName('department-item')[i].children[1].children[2].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[1].children[0].value){
+                quantity = document.getElementsByClassName('department-item')[i].children[1].children[2].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[1].children[0].value
             }
-            if (document.getElementsByClassName('asda-link asda-link--secondary')[i].href) {
-                url = document.getElementsByClassName('asda-link asda-link--secondary')[i].href;
+            if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].children[0].children[0].href) {
+                url = document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].children[0].children[0].href;
             } 
             if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[1].children[0].children[0].innerText){
-                priceText = document.getElementsByClassName('ingredient__price')[i].innerText;
+                priceText = document.getElementsByClassName('department-item')[i].children[1].children[0].children[1].children[0].children[0].innerText;
             }
-            if (document.getElementsByClassName('asda-link asda-link--secondary')[i].innerText) {
-                productText = document.getElementsByClassName('asda-link asda-link--secondary')[i].innerText;
+            if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].innerText) {
+                productText = document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].innerText;
             }
             if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[1]) {
                 promoText = document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[1].innerText;
