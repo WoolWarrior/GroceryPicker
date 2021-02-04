@@ -1,8 +1,8 @@
 {
-  "name": "Download cart to CSV",
+  "name": "Grocery Picker",
   "version": "0.9.0",
-  "description": "Download your supermarket grocery cart to a CSV file",
-  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "description": "Download your supermarket grocery cart to a CSV file and Add items to your cart from a CSV file",
+  "permissions": ["declarativeContent", "storage","https://groceries.morrisons.com/*","https://www.sainsburys.co.uk/*","https://groceries.asda.com/*","https://www.waitrose.com/*"],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
