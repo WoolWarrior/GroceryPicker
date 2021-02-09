@@ -91,8 +91,8 @@ function cartToCSVASDA(pathname) {
             let productText = '';
             let promoText = '';
 
-            if (document.getElementsByClassName('department-item')[i].children[1].children[2].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[1].children[0].value){
-                quantity = document.getElementsByClassName('department-item')[i].children[1].children[2].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[1].children[0].value
+            if (document.getElementsByClassName('department-item')[i].children[1].children[2].children[0].children[0].children[1].children[0].children[0].children[0].children[1].children[0].children[0].value){
+                quantity = document.getElementsByClassName('department-item')[i].children[1].children[2].children[0].children[0].children[1].children[0].children[0].children[0].children[1].children[0].children[0].value
             }
             if (document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].children[0].children[0].href) {
                 url = document.getElementsByClassName('department-item')[i].children[1].children[0].children[0].children[0].children[0].children[0].href;
