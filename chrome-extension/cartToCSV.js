@@ -39,20 +39,20 @@ function cartToCSVMorrisons (pathname) {
 }
 
 function cartToCSVSainsburys (pathname) {
-    if (pathname !== "/shop/AjaxOrderItemDisplayView") {
+    if (pathname !== "/webapp/wcs/stores/servlet/OrderBillingView") {
         alert('Please go to My trolley page');
-        window.open('/shop/AjaxOrderItemDisplayView')
+        window.open('/webapp/wcs/stores/servlet/OrderBillingView')
         return [];
     } else {
         let itemRows = [];
     
-        for (let i = 0; i < document.getElementsByTagName('tbody')[1].children.length; i++) {
+        for (let i = 0; i < document.getElementsByTagName('tbody')[3].children.length; i++) {
             let quantity = 0;
             let url = '';
             let priceText = '0';
     
-            if (document.getElementsByClassName('inTrolley')[i].innerText){
-                quantity = document.getElementsByClassName('inTrolley')[i].innerText;
+            if (document.getElementsByClassName('quantity')[i].innerText[0]){
+                quantity = document.getElementsByClassName('quantity')[i].innerText[0];
             }
             if (document.getElementsByClassName('productContainer')[i].firstElementChild.href) {
                 url = document.getElementsByClassName('productContainer')[i].firstElementChild.href;
